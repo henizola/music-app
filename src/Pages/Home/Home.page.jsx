@@ -1,28 +1,36 @@
+import React, { useState } from "react";
+
 import { Container } from "./Home.styles";
-import { Link } from "react-router-dom";
+
+import Stepper from "../../Components/stepper/Steper.component";
+import Dashboard from "../../Components/Dashbaord/Dashboard.component";
+import MusicalWork from "../../Components/MusicalWork/MusicalWork";
+import Setting from "../../Components/Setting/Setting.component";
+import PersonalIdentifiers from "../../Components/PersonalIdentifiers/PersonalIdentifiers.component";
+import SoundRecordings from "../../Components/SoundRecordings/SoundRecordings";
+
 const Home = () => {
+	const [currentStep, setCurrentStep] = useState(0);
+
+	const onNext = () => {
+		setCurrentStep(currentStep + 1);
+	};
+
+	const setStep = (step) => {
+		setCurrentStep(step);
+	};
+
 	return (
 		<Container>
-			<div className='login-box'>
-				<h2>Login</h2>
-				<form>
-					<div className='user-box'>
-						<input type='text' name='' required='' />
-						<label>Email</label>
-					</div>
-					<div className='user-box'>
-						<input type='password' name='' required='' />
-						<label>Password</label>
-					</div>
-					<Link to='/about'>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						Submit
-					</Link>
-				</form>
-			</div>
+			<Stepper currentStep={currentStep} setStep={setStep}>
+				<Dashboard />
+				<MusicalWork />
+				<SoundRecordings />
+
+				<PersonalIdentifiers />
+
+				<Setting />
+			</Stepper>
 		</Container>
 	);
 };
