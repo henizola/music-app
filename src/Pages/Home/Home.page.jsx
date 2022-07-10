@@ -12,10 +12,6 @@ import SoundRecordings from "../../Components/SoundRecordings/SoundRecordings";
 const Home = () => {
 	const [currentStep, setCurrentStep] = useState(0);
 
-	const onNext = () => {
-		setCurrentStep(currentStep + 1);
-	};
-
 	const setStep = (step) => {
 		setCurrentStep(step);
 	};

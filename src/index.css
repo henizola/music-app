@@ -18,3 +18,46 @@ code {
   font-family: 'Montserrat', sans-serif;}
 
  
+  button{
+    cursor: pointer;
+  }
+
+  .search-wrapper  { 
+    border: none!important;
+    font-size: 10px;
+    min-height: 50px;
+    }
+
+    .dWAXYf .user-box input, .dWAXYf select{
+      margin-bottom: 0!important;
+
+    }
+
+    .chip{
+
+      background: linear-gradient(#141e30, #243b55)!important;
+    }
+
+    option { 
+      background: linear-gradient(#141e30, #243b55)!important;
+
+      }
+
+      .back {
+        border: none;
+        background-color: transparent;
+        font-size: 30px;
+        padding: 30px;
+        padding-bottom: 0;
+        padding-top: 0;
+      }
+
+      .create{
+        bordeR:1px solid black;
+        padding:10px;
+        background-color: transparent;
+        margin:0!important;
+        position: absolute;
+        bottom: 30px;
+        left:0;
+      }
