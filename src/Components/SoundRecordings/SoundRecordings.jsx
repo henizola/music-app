@@ -3,12 +3,13 @@ import { useState } from "react";
 import MaterialTable from "material-table";
 import AddNewWork from "./AddNewWork";
 import SoundContainer from "./Container.component";
-import { work } from "../../utils/recording";
+
 import AddNewRightHolder from "./AddNewRightHolder";
-import { rightHolderList } from "../../utils/utils";
+import { rightHolderList, work } from "../../utils/utils";
+import EditSoundRecording from "./EditSoundRecording";
 
 function SoundRecordings() {
-	const [data, setData] = useState([]);
+	const [dataToEdit, setDataToEdit] = useState(null);
 	const [currentStep, setCurrentStep] = useState(0);
 
 	const setStep = (step) => {
@@ -45,6 +46,12 @@ function SoundRecordings() {
 		{ title: " Rightsholders", field: "rightsholders" },
 	];
 
+	const handleEditRightHolder = (newData, index) => {
+		let temp = [...newWork];
+		temp[index] = newData;
+		setNewWork([...temp]);
+	};
+
 	return (
 		<SoundContainer currentStep={currentStep} setStep={setStep}>
 			<div>
@@ -57,23 +64,16 @@ function SoundRecordings() {
 				<MaterialTable
 					title='Sound Recordings'
 					style={{ padding: "30px" }}
-					editable={{
-						onRowUpdateCancelled: (rowData) =>
-							console.log("Row editing cancelled"),
-
-						onRowUpdate: (newData, oldData) =>
-							new Promise((resolve, reject) => {
-								setTimeout(() => {
-									const dataUpdate = [...newWork];
-									const index = oldData.tableData.id;
-									console.log("here is the");
-									dataUpdate[index] = newData;
-									setNewWork([...dataUpdate]);
-
-									resolve();
-								}, 1000);
-							}),
-					}}
+					actions={[
+						{
+							icon: "edit",
+							tooltip: "Edit data",
+							onClick: (event, rowData) => {
+								setStep(currentStep + 3);
+								setDataToEdit(rowData);
+							},
+						},
+					]}
 					columns={columns}
 					data={newWork}
 				/>
@@ -89,6 +89,13 @@ function SoundRecordings() {
 				setStep={setStep}
 				handleAddRightHolder={handleAddRightHolder}
 				rightHolders={rightHolders}
+			/>
+			<EditSoundRecording
+				currentStep={currentStep}
+				setStep={setStep}
+				handleEditRightHolder={handleEditRightHolder}
+				rightHolders={rightHolders}
+				data={dataToEdit}
 			/>
 		</SoundContainer>
 	);

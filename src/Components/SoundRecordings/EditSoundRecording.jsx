@@ -5,56 +5,75 @@ import { composerType } from "../../utils/utils";
 import { Card } from "../card/card.component";
 import { Container } from "./Recording.styles";
 
-const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
-	const [title, setTitle] = useState("");
-	const [registrant, setRegistrant] = useState("");
-	const [musicalCompositionTitle, setMsicalCompositionTitle] = useState("");
-	const [statusOfRecording, setStatusOfRecording] = useState("");
-	const [workCategory, setWorkCategory] = useState("");
-	const [iSRC, setISRC] = useState("");
-	const [isOriginal, setIsOriginals] = useState("");
+const EditSoundRecording = ({
+	currentStep,
+	setStep,
+	rightHolders,
+	handleEditRightHolder,
+	data,
+}) => {
+	const [title, setTitle] = useState(data.title);
+	const [registrant, setRegistrant] = useState(data.registrant);
+	const [musicalCompositionTitle, setMsicalCompositionTitle] = useState(
+		data.musicalCompositionTitle
+	);
+	const [statusOfRecording, setStatusOfRecording] = useState(
+		data.statusOfRecording
+	);
+	const [workCategory, setWorkCategory] = useState(data.workCategory);
+	const [iSRC, setISRC] = useState(data.iSRC);
+	const [isOriginal, setIsOriginals] = useState(data.isOriginal);
 	const [
 		isFirstRecordingOfMusicalComposition,
 		setIsFirstRecordingOfMusicalComposition,
-	] = useState("");
-	const [mediaSubmitted, setMediaSubmitted] = useState("");
-	const [dateOfRegistration, setDateOfRegistration] = useState(new Date());
-	const [myRightHolders, setMyRightsholders] = useState([]);
+	] = useState(data.isFirstRecordingOfMusicalComposition);
+	const [mediaSubmitted, setMediaSubmitted] = useState(
+		data.isFirstRecordingOfMusicalComposition
+	);
+	const [dateOfRegistration, setDateOfRegistration] = useState(
+		data.dateOfRegistration
+	);
+	const [myRightsholders, setRightsholders] = useState(data.myRightHolders);
 	const handleSave = (e) => {
 		e.preventDefault();
-		setStep(currentStep - 1);
-		handleAddWork({
-			title: title,
-			registrant: registrant,
-			musicalCompositionTitle: musicalCompositionTitle,
-			statusOfRecording: statusOfRecording,
-			workCategory: workCategory,
-			iSRC: iSRC,
-			isOriginal: isOriginal,
-			isFirstRecordingOfMusicalComposition:
-				isFirstRecordingOfMusicalComposition,
-			mediaSubmitted: mediaSubmitted,
-			dateOfRegistration: dateOfRegistration,
-			rightsholders: `${myRightHolders
-				.flatMap(({ givenName }) => givenName)
-				.join()}`,
-			myRightholders: myRightHolders,
-		});
+		setStep(0);
+
+		handleEditRightHolder(
+			{
+				title: title,
+				registrant: registrant,
+				musicalCompositionTitle: musicalCompositionTitle,
+				statusOfRecording: statusOfRecording,
+				workCategory: workCategory,
+				iSRC: iSRC,
+				isOriginal: isOriginal,
+				isFirstRecordingOfMusicalComposition:
+					isFirstRecordingOfMusicalComposition,
+				mediaSubmitted: mediaSubmitted,
+				dateOfRegistration: dateOfRegistration,
+				rightsholders: `${myRightsholders
+					.flatMap(({ givenName }) => givenName)
+					.join()}`,
+				myRightholders: myRightsholders,
+			},
+			data.tableData.id
+		);
 	};
 	return (
 		<Container>
 			<Card>
-				<button className='back' onClick={() => setStep(currentStep - 1)}>
+				<button className='back' onClick={() => setStep(0)}>
 					<BiLeftArrowAlt />
 				</button>
 				<form className='works' onSubmit={handleSave}>
 					<div className='flex'>
-						<h4 className='title'>Add New Sound Recording</h4>
+						<h4 className='title'>Edit Sound Recording</h4>
 					</div>
 					<div className='stats'>
 						<div className='user-box'>
 							<input
 								name='title'
+								value={title}
 								required={true}
 								onChange={(e) => setTitle(e.target.value)}
 							/>
@@ -63,6 +82,7 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 						<div className='user-box'>
 							<input
 								name='registerant'
+								value={registrant}
 								required
 								onChange={(e) => setRegistrant(e.target.value)}
 							/>
@@ -72,12 +92,14 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 							<input
 								name='musicalCompositionTitle'
 								required
+								value={musicalCompositionTitle}
 								onChange={(e) => setMsicalCompositionTitle(e.target.value)}
 							/>
 							<label>Msical Composition Title *</label>
 						</div>
 						<div
 							className='user-box'
+							value={statusOfRecording}
 							onChange={(e) => setStatusOfRecording(e.target.value)}
 						>
 							<select name='' id=''>
@@ -90,6 +112,7 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 						<div className='user-box'>
 							<input
 								name='WorkCategory'
+								value={workCategory}
 								required
 								onChange={(e) => setWorkCategory(e.target.value)}
 							/>
@@ -100,12 +123,14 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 							<input
 								name='Isrc'
 								required
+								value={iSRC}
 								onChange={(e) => setISRC(e.target.value)}
 							/>
 							<label>ISRC *</label>
 						</div>
 
 						<div
+							value={isOriginal}
 							className='user-box'
 							onChange={(e) => setIsOriginals(e.target.value)}
 						>
@@ -118,6 +143,7 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 
 						<div
 							className='user-box'
+							value={isFirstRecordingOfMusicalComposition}
 							onChange={(e) =>
 								setIsFirstRecordingOfMusicalComposition(e.target.value)
 							}
@@ -133,6 +159,7 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 							<input
 								name='media'
 								required
+								value={mediaSubmitted}
 								onChange={(e) => setMediaSubmitted(e.target.value)}
 							/>
 							<label>Meida Submitted *</label>
@@ -143,8 +170,8 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 								name='Date'
 								type='date'
 								required
-								onChange={(e) => setDateOfRegistration(e.target.value)}
 								value={dateOfRegistration}
+								onChange={(e) => setDateOfRegistration(e.target.value)}
 							/>
 							<label>Date Of Registration *</label>
 						</div>
@@ -152,9 +179,9 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 							<Multiselect
 								placeholder='Search for Right Holders *'
 								options={rightHolders}
-								// selectedValues={[]}
-								onSelect={(e) => setMyRightsholders(e)}
-								onRemove={(e) => setMyRightsholders(e)} // Function will
+								selectedValues={data.myRightHolders}
+								onSelect={(e) => setRightsholders(e)}
+								onRemove={(e) => setRightsholders(e)} // Function will
 								displayValue='givenName'
 							/>
 						</div>
@@ -180,4 +207,4 @@ const AddNewWork = ({ currentStep, setStep, rightHolders, handleAddWork }) => {
 	);
 };
 
-export default AddNewWork;
+export default EditSoundRecording;

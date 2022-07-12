@@ -50,3 +50,22 @@ export const workDetails = [
 		composers: composersList,
 	},
 ];
+
+export const work = [
+	{
+		title: "work1",
+		registrant: "Artist 1",
+		musicalCompositionTitle: "Music 1",
+		statusOfRecording: "Demo",
+		workCategory: "Music Composition",
+		iSRC: "isrc 1",
+		isOriginal: true,
+		isFirstRecordingOfMusicalComposition: true,
+		mediaSubmitted: "media",
+		dateOfRegistration: "12-12-2022",
+		rightsholders: `${rightHolderList
+			.flatMap(({ givenName }) => givenName)
+			.join()}`,
+		myRightHolders: rightHolderList,
+	},
+];

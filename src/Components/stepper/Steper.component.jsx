@@ -8,10 +8,9 @@ import { Contanier } from "./Stepper.styles";
 
 const Stepper = ({ currentStep, children, setStep }) => {
 	const steps = [
-		"Dashboard",
-
 		"Musical Work",
 		"Sound Recordings ",
+		"Dashboard",
 		"Personal Identifiers",
 
 		"Settings",

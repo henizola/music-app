@@ -19,10 +19,9 @@ const Home = () => {
 	return (
 		<Container>
 			<Stepper currentStep={currentStep} setStep={setStep}>
-				<Dashboard />
 				<MusicalWork />
 				<SoundRecordings />
-
+				<Dashboard />
 				<PersonalIdentifiers />
 
 				<Setting />

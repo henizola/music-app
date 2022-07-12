@@ -20,7 +20,6 @@ const EditMusicalWork = ({
 	const handleSave = (e) => {
 		e.preventDefault();
 		setStep(0);
-		console.log(data.tableData.id);
 
 		handleEditWork(
 			{
