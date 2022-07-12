@@ -6,9 +6,11 @@ import { composersList, workDetails } from "../../utils/utils";
 import MusicalContainer from "./Container.component";
 import AddNewWork from "./AddNewMusical";
 import AddNewComposor from "./AddNewComposor";
+import EditMusicalWork from "./EditMusicalWork";
 
 const MusicalWork = () => {
 	const [currentStep, setCurrentStep] = useState(0);
+	const [dataToEdit, setDataToEdit] = useState(null);
 
 	const setStep = (step) => {
 		setCurrentStep(step);
@@ -17,7 +19,7 @@ const MusicalWork = () => {
 	const [composors, setComposors] = useState(composersList);
 
 	const columns = [
-		{ title: "Title", field: "title", editable: true },
+		{ title: "Title", field: "title" },
 		{
 			title: " Work Category",
 			field: "workCategory",
@@ -35,6 +37,7 @@ const MusicalWork = () => {
 			composers: `${workDetails[0].composers
 				.flatMap(({ givenName }) => givenName)
 				.join()}`,
+			myComposors: workDetails[0].composers,
 		},
 	]);
 
@@ -42,12 +45,17 @@ const MusicalWork = () => {
 		setData([...data, newData]);
 	};
 
+	const handleEditWork = (newData, index) => {
+		console.log("this is recived", newData, index);
+		let temp = [...data];
+		temp[index] = newData;
+		setData([...temp]);
+	};
+
 	const handleAddComposor = (newData) => {
 		setComposors([...composors, newData]);
 	};
 
-	const result = workDetails[0].composers;
-	console.log("here is your data", result);
 	return (
 		<MusicalContainer currentStep={currentStep} setStep={setStep}>
 			<div>
@@ -60,25 +68,16 @@ const MusicalWork = () => {
 				<MaterialTable
 					title='Musical Work'
 					style={{ padding: "30px" }}
-					editable={{
-						isEditable: (rowData) => rowData.title === "title", // only name(a) rows would be editable
-						isEdit: (rowData) => rowData.name === "title",
-
-						onRowUpdateCancelled: (rowData) =>
-							console.log("Row editing cancelled"),
-
-						onRowUpdate: (newData, oldData) =>
-							new Promise((resolve, reject) => {
-								setTimeout(() => {
-									const dataUpdate = [...data];
-									const index = oldData.tableData.id;
-									dataUpdate[index] = newData;
-									setData([...dataUpdate]);
-
-									resolve();
-								}, 1000);
-							}),
-					}}
+					actions={[
+						{
+							icon: "edit",
+							tooltip: "Edit data",
+							onClick: (event, rowData) => {
+								setStep(currentStep + 3);
+								setDataToEdit(rowData);
+							},
+						},
+					]}
 					columns={columns}
 					data={data}
 				/>
@@ -94,6 +93,14 @@ const MusicalWork = () => {
 				setStep={setStep}
 				composors={composors}
 				handleAddComposor={handleAddComposor}
+			/>
+			<EditMusicalWork
+				currentStep={currentStep}
+				setStep={setStep}
+				composors={composors}
+				handleAddComposor={handleAddComposor}
+				data={dataToEdit}
+				handleEditWork={handleEditWork}
 			/>
 		</MusicalContainer>
 	);

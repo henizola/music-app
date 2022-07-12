@@ -58,33 +58,17 @@ function SoundRecordings() {
 					title='Sound Recordings'
 					style={{ padding: "30px" }}
 					editable={{
-						isEditable: (rowData) => rowData.title === "title", // only name(a) rows would be editable
-						isEdit: (rowData) => rowData.name === "x",
-						isDeletable: (rowData) => rowData.name === "b", // only name(b) rows would be deletable,
-						isDelete: (rowData) => rowData.name === "y",
-
-						onRowAddCancelled: (rowData) => console.log("Row adding cancelled"),
 						onRowUpdateCancelled: (rowData) =>
 							console.log("Row editing cancelled"),
 
 						onRowUpdate: (newData, oldData) =>
 							new Promise((resolve, reject) => {
 								setTimeout(() => {
-									const dataUpdate = [...data];
+									const dataUpdate = [...newWork];
 									const index = oldData.tableData.id;
+									console.log("here is the");
 									dataUpdate[index] = newData;
-									setData([...dataUpdate]);
-
-									resolve();
-								}, 1000);
-							}),
-						onRowDelete: (oldData) =>
-							new Promise((resolve, reject) => {
-								setTimeout(() => {
-									const dataDelete = [...data];
-									const index = oldData.tableData.id;
-									dataDelete.splice(index, 1);
-									setData([...dataDelete]);
+									setNewWork([...dataUpdate]);
 
 									resolve();
 								}, 1000);
